@@ -36,6 +36,7 @@ npm run lint    # Lint
 
 ## リンク
 
+- サイト: https://portfolio-teal-two-97.vercel.app/
 - note: https://note.com/o_sheep_like
 - X: https://x.com/o_sheep_like
 
