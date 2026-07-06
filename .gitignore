@@ -26,3 +26,7 @@ next-env.d.ts
 
 # vercel
 .vercel
+
+# AI作業用の指示ファイル(公開しない)
+AGENTS.md
+CLAUDE.md
