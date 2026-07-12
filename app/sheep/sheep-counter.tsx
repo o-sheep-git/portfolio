@@ -2,7 +2,10 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-type Jump = { id: number };
+type Jump = { id: number; kind: "sheep" | "chick" };
+
+/* ごくたまに、ひつじの列にひよこがまぎれこみます */
+const CHICK_CHANCE = 0.05;
 
 const stars = [
   { left: "8%", top: "6%", size: 3, delay: "0s" },
@@ -55,6 +58,33 @@ function SheepSvg() {
   );
 }
 
+function ChickSvg() {
+  return (
+    <svg viewBox="0 0 90 92" width="64" height="65" aria-hidden="true">
+      {/* あし */}
+      <g stroke="#e0913d" strokeWidth="4" strokeLinecap="round">
+        <line x1="38" y1="70" x2="36" y2="87" />
+        <line x1="53" y1="70" x2="55" y2="87" />
+      </g>
+      {/* からだ */}
+      <circle cx="45" cy="48" r="27" fill="#f8da55" />
+      {/* はね */}
+      <ellipse cx="29" cy="52" rx="10" ry="14" fill="#eec93f" />
+      {/* あたまの毛 */}
+      <path
+        d="M42 22 q3 -8 8 -6 q-2 2 -1 5 q4 -4 8 -1 q-4 1 -5 5z"
+        fill="#eec93f"
+      />
+      {/* くちばし */}
+      <path d="M71 44 l10 4 -10 5z" fill="#e0913d" />
+      {/* め */}
+      <circle cx="60" cy="40" r="2.4" fill="#20232e" />
+      {/* ほっぺ */}
+      <circle cx="63" cy="50" r="3.5" fill="#f0ac66" opacity="0.75" />
+    </svg>
+  );
+}
+
 function FenceSvg() {
   return (
     <svg viewBox="0 0 130 72" width="118" height="65" aria-hidden="true">
@@ -85,7 +115,8 @@ export function SheepCounter() {
   const handleCount = useCallback(() => {
     setCount((c) => c + 1);
     const id = nextId.current++;
-    setJumps((js) => [...js, { id }]);
+    const kind = Math.random() < CHICK_CHANCE ? "chick" : "sheep";
+    setJumps((js) => [...js, { id, kind }]);
     timers.current.push(
       setTimeout(() => {
         setJumps((js) => js.filter((j) => j.id !== id));
@@ -134,7 +165,7 @@ export function SheepCounter() {
       {jumps.map((j) => (
         <div key={j.id} className="sheep-track">
           <div className="sheep-jump">
-            <SheepSvg />
+            {j.kind === "chick" ? <ChickSvg /> : <SheepSvg />}
           </div>
         </div>
       ))}
