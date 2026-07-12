@@ -30,3 +30,6 @@ next-env.d.ts
 # AI作業用の指示ファイル(公開しない)
 AGENTS.md
 CLAUDE.md
+
+# AI作業用の設定(公開しない)
+.claude/
