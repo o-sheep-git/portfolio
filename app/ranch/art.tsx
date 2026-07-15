@@ -208,15 +208,16 @@ export function SheepFaceIcon({ size = 18 }: IconProps) {
   );
 }
 
-export function ScissorsIcon({ size = 22 }: IconProps) {
+export function BrushIcon({ size = 22 }: IconProps) {
   return (
     <svg viewBox="0 0 24 24" width={size} height={size} aria-hidden="true">
-      <g stroke="#7a8ca3" strokeWidth="2.2" strokeLinecap="round">
-        <line x1="7.5" y1="4.5" x2="15" y2="17" />
-        <line x1="16.5" y1="4.5" x2="9" y2="17" />
+      <rect x="2.5" y="9.5" width="9" height="5" rx="2.5" fill="#a9714f" />
+      <rect x="10" y="7.5" width="10" height="8.5" rx="2.5" fill="#8a6f58" />
+      <g stroke="#e8d5b5" strokeWidth="1.8" strokeLinecap="round">
+        <line x1="12.5" y1="16.5" x2="12.5" y2="19.5" />
+        <line x1="15.2" y1="16.5" x2="15.2" y2="19.5" />
+        <line x1="17.9" y1="16.5" x2="17.9" y2="19.5" />
       </g>
-      <circle cx="7" cy="19" r="2.7" fill="none" stroke="#7a8ca3" strokeWidth="2" />
-      <circle cx="17" cy="19" r="2.7" fill="none" stroke="#7a8ca3" strokeWidth="2" />
     </svg>
   );
 }

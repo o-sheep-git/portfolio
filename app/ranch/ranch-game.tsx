@@ -20,6 +20,7 @@ import {
   type SeasonKey,
 } from "./logic";
 import {
+  BrushIcon,
   ChickSvg,
   CloudSvg,
   CoinIcon,
@@ -28,7 +29,6 @@ import {
   GrassIcon,
   HayIcon,
   HutSvg,
-  ScissorsIcon,
   SheepFaceIcon,
   SheepSvg,
   SignIcon,
@@ -81,7 +81,7 @@ function cardIcon(id: CardId) {
     case "pasture":
       return <GrassIcon size={22} />;
     case "shear":
-      return <ScissorsIcon />;
+      return <BrushIcon />;
     case "fence":
       return <FenceIcon />;
     case "sign":
@@ -205,6 +205,7 @@ export function RanchGame() {
               </p>
               <ul className="mk-howto">
                 <li>毎週3枚のカードから1枚選んで、牧場を育てよう</li>
+                <li>ひつじは草を食べて羊毛を作る。草の管理がだいじ</li>
                 <li>羊毛の売値は毎週変わる。売り時を見きわめて</li>
                 <li>12週目の収穫祭で、総資産を発表！</li>
               </ul>
@@ -324,7 +325,7 @@ export function RanchGame() {
               <div className="mk-actions">
                 <p className="mk-festival-note">
                   いよいよ収穫祭！売り残した羊毛は1個
-                  {FESTIVAL_BASE_PRICE + game.sign}Gで買い取ってもらえる。
+                  {FESTIVAL_BASE_PRICE + game.sign * 2}Gで買い取ってもらえる。
                   今売ると1個{sellPrice(game)}G。どっちがお得？
                 </p>
                 <button

@@ -5,7 +5,7 @@ export const TOTAL_WEEKS = 12;
 export const MAX_SHEEP = 20;
 export const NAP_MONEY = 2;
 export const FESTIVAL_BASE_PRICE = 6;
-export const SHEEP_VALUE = 12;
+export const SHEEP_VALUE = 15;
 export const PRICE_MIN = 2;
 export const PRICE_MAX = 12;
 
@@ -44,16 +44,17 @@ export function seasonLabel(week: number): string {
 }
 
 export function grassGrowth(s: GameState): number {
-  return 3 + s.pasture * 2;
+  return 1 + s.pasture * 3;
 }
 
 export function woolPerSheep(s: GameState): number {
   return s.shear;
 }
 
-/* 看板とブームをふくめた、今の1個あたりの売値 */
+/* 看板とブームをふくめた、今の1個あたりの売値。
+   看板のぶんもブームで2倍になる（ため込み売りとの相性を出す） */
 export function sellPrice(s: GameState): number {
-  return (s.boom ? s.price * 2 : s.price) + s.sign;
+  return (s.price + s.sign * 2) * (s.boom ? 2 : 1);
 }
 
 /* 秋(9週目〜)はオオカミが手ごわくなる */
@@ -73,8 +74,8 @@ export type Card = {
 export const CARDS: Record<CardId, Card> = {
   lamb: {
     name: "子ひつじを迎える",
-    detail: () => "ひつじが1匹増える",
-    cost: (s) => 6 + s.sheep * 2,
+    detail: (s) => `ひつじ +1匹（毎週 草を${woolPerSheep(s)}束食べる）`,
+    cost: (s) => 7 + s.sheep,
     maxed: (s) => s.sheep >= MAX_SHEEP,
     apply: (s) => {
       s.sheep += 1;
@@ -83,22 +84,23 @@ export const CARDS: Record<CardId, Card> = {
   },
   pasture: {
     name: "牧草地を耕す",
-    detail: (s) => `毎週の草 +2（今は +${grassGrowth(s)}）`,
+    detail: (s) => `毎週の草 +3（今は +${grassGrowth(s)}）`,
     cost: (s) => 6 + s.pasture * 4,
-    maxed: (s) => s.pasture >= 6,
+    maxed: (s) => s.pasture >= 5,
     apply: (s) => {
       s.pasture += 1;
       return "牧草地を耕して広げた。";
     },
   },
   shear: {
-    name: "新しいハサミ",
-    detail: (s) => `1匹あたりの羊毛 +1（今は${woolPerSheep(s)}個）`,
-    cost: (s) => 12 + s.shear * 8,
-    maxed: (s) => s.shear >= 4,
+    name: "上等なブラシ",
+    detail: (s) =>
+      `1匹の羊毛 +1、草の消費も +1（今は${woolPerSheep(s)}個/匹）`,
+    cost: (s) => 20 + s.shear * 16,
+    maxed: (s) => s.shear >= 3,
     apply: (s) => {
       s.shear += 1;
-      return "新しいハサミで毛刈りが上手になった。";
+      return "上等なブラシでお手入れ。毛がふさふさ育つ（食欲も育つ）。";
     },
   },
   fence: {
@@ -113,8 +115,8 @@ export const CARDS: Record<CardId, Card> = {
   },
   sign: {
     name: "看板を立てる",
-    detail: (s) => `売値がいつも +1G（今は +${s.sign}G）`,
-    cost: (s) => 9 + s.sign * 6,
+    detail: (s) => `売値がいつも +2G（今は +${s.sign * 2}G）`,
+    cost: (s) => 10 + s.sign * 8,
     maxed: (s) => s.sign >= 3,
     apply: (s) => {
       s.sign += 1;
@@ -134,7 +136,7 @@ export const CARDS: Record<CardId, Card> = {
   treat: {
     name: "特製おやつ",
     detail: () => "次の毛刈りで羊毛2倍",
-    cost: () => 5,
+    cost: (s) => 4 + s.sheep * s.shear,
     maxed: () => false,
     apply: (s) => {
       s.treatReady = true;
@@ -158,12 +160,23 @@ function randInt(min: number, max: number): number {
 }
 
 function drawOffers(s: GameState): CardId[] {
-  const pool = CARD_ORDER.filter((id) => !CARDS[id].maxed(s));
+  /* 子ひつじは2枚ぶん入れて出会いやすくする（頭数戦略の実行しやすさ調整） */
+  const pool: CardId[] = [];
+  for (const id of CARD_ORDER) {
+    if (CARDS[id].maxed(s)) continue;
+    pool.push(id);
+    if (id === "lamb") pool.push(id);
+  }
   for (let i = pool.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [pool[i], pool[j]] = [pool[j], pool[i]];
   }
-  return pool.slice(0, 3);
+  const out: CardId[] = [];
+  for (const id of pool) {
+    if (!out.includes(id)) out.push(id);
+    if (out.length === 3) break;
+  }
+  return out;
 }
 
 function rollEvent(s: GameState) {
@@ -173,8 +186,8 @@ function rollEvent(s: GameState) {
     s.event = "wolf";
     if (s.fence >= fenceNeeded(s.week)) {
       s.report.push("夜中にオオカミが来たけれど、丈夫な柵が守ってくれた！");
-    } else if (s.sheep <= 2) {
-      s.report.push("遠くでオオカミの遠ぼえ…。ひつじたちは寄りそって無事だった。");
+    } else if (s.sheep <= 1) {
+      s.report.push("遠くでオオカミの遠ぼえ…。ひつじは小屋のかげで無事だった。");
     } else {
       s.sheep -= 1;
       s.report.push("夜中にオオカミが来て、ひつじが1匹連れていかれた…。柵があれば防げる。");
@@ -191,7 +204,7 @@ function rollEvent(s: GameState) {
     s.report.push("ぽかぽか日和！草がぐんぐん育つ。");
     return;
   }
-  if (r < (acc += 0.1)) {
+  if (r < (acc += 0.12)) {
     s.event = "boom";
     s.boom = true;
     s.report.push("町は羊毛ブーム！今週だけ売値が2倍！");
@@ -205,7 +218,8 @@ function rollEvent(s: GameState) {
   }
 }
 
-/* 週のはじまりの生産：草が育つ → ひつじが食べる → 毛刈り */
+/* 週のはじまりの生産：草が育つ → ひつじが食べる → 毛刈り。
+   1匹が食べる草はブラシLvぶん。食べた草1束が羊毛1個になる */
 function produce(s: GameState) {
   let growth = grassGrowth(s);
   if (s.event === "rain") growth = Math.floor(growth / 2);
@@ -213,9 +227,11 @@ function produce(s: GameState) {
   s.grass += growth;
   s.report.push(`草が${growth}束育った。`);
 
-  const fed = Math.min(s.sheep, s.grass);
-  s.grass -= fed;
-  let gained = fed * woolPerSheep(s);
+  const appetite = woolPerSheep(s);
+  const fed = Math.min(s.sheep, Math.floor(s.grass / appetite));
+  const eaten = fed * appetite;
+  s.grass -= eaten;
+  let gained = fed * appetite;
   if (s.treatReady && fed > 0) {
     gained *= 2;
     s.treatReady = false;
@@ -223,7 +239,7 @@ function produce(s: GameState) {
   }
   s.wool += gained;
   if (fed > 0) {
-    s.report.push(`ひつじ${fed}匹が草を食べて、羊毛が${gained}個とれた。`);
+    s.report.push(`ひつじ${fed}匹が草を${eaten}束食べて、羊毛が${gained}個とれた。`);
   }
   const hungry = s.sheep - fed;
   if (hungry > 0) {
@@ -252,7 +268,7 @@ export function newGame(): GameState {
   const s: GameState = {
     week: 1,
     money: 12,
-    grass: 6,
+    grass: 5,
     wool: 0,
     sheep: 2,
     pasture: 1,
@@ -312,7 +328,7 @@ export type FinalResult = {
 };
 
 export function finalize(s: GameState): FinalResult {
-  const festivalPrice = FESTIVAL_BASE_PRICE + s.sign;
+  const festivalPrice = FESTIVAL_BASE_PRICE + s.sign * 2;
   const woolIncome = s.wool * festivalPrice;
   const sheepValue = s.sheep * SHEEP_VALUE;
   const score = s.money + woolIncome + sheepValue;
