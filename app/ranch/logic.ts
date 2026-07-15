@@ -40,7 +40,7 @@ export function seasonKey(week: number): SeasonKey {
 }
 
 export function seasonLabel(week: number): string {
-  return { spring: "はる", summer: "なつ", autumn: "あき" }[seasonKey(week)];
+  return { spring: "春", summer: "夏", autumn: "秋" }[seasonKey(week)];
 }
 
 export function grassGrowth(s: GameState): number {
@@ -51,12 +51,12 @@ export function woolPerSheep(s: GameState): number {
   return s.shear;
 }
 
-/* かんばんとブームをふくめた、いまの1こあたりの売値 */
+/* 看板とブームをふくめた、今の1個あたりの売値 */
 export function sellPrice(s: GameState): number {
   return (s.boom ? s.price * 2 : s.price) + s.sign;
 }
 
-/* あき(9週め〜)はオオカミが手ごわくなる */
+/* 秋(9週目〜)はオオカミが手ごわくなる */
 export function fenceNeeded(week: number): number {
   return week <= 8 ? 1 : 2;
 }
@@ -72,73 +72,73 @@ export type Card = {
 
 export const CARDS: Record<CardId, Card> = {
   lamb: {
-    name: "こひつじを むかえる",
-    detail: () => "ひつじが 1ぴき ふえる",
+    name: "子ひつじを迎える",
+    detail: () => "ひつじが1匹増える",
     cost: (s) => 6 + s.sheep * 2,
     maxed: (s) => s.sheep >= MAX_SHEEP,
     apply: (s) => {
       s.sheep += 1;
-      return "こひつじが なかまいり！ もこもこが ふえた。";
+      return "子ひつじが仲間入り！もこもこが増えた。";
     },
   },
   pasture: {
-    name: "ぼくそうちを たがやす",
-    detail: (s) => `まいしゅうの くさ +2（いまは +${grassGrowth(s)}）`,
+    name: "牧草地を耕す",
+    detail: (s) => `毎週の草 +2（今は +${grassGrowth(s)}）`,
     cost: (s) => 6 + s.pasture * 4,
     maxed: (s) => s.pasture >= 6,
     apply: (s) => {
       s.pasture += 1;
-      return "ぼくそうちを たがやして ひろげた。";
+      return "牧草地を耕して広げた。";
     },
   },
   shear: {
-    name: "あたらしい ハサミ",
-    detail: (s) => `1ぴきの ようもう +1（いまは ${woolPerSheep(s)}こ）`,
+    name: "新しいハサミ",
+    detail: (s) => `1匹あたりの羊毛 +1（今は${woolPerSheep(s)}個）`,
     cost: (s) => 12 + s.shear * 8,
     maxed: (s) => s.shear >= 4,
     apply: (s) => {
       s.shear += 1;
-      return "あたらしい ハサミで けがりが じょうずに なった。";
+      return "新しいハサミで毛刈りが上手になった。";
     },
   },
   fence: {
-    name: "さくの ほきょう",
-    detail: (s) => `オオカミよけ Lv${s.fence}→${s.fence + 1}（あきは Lv2 ひつよう）`,
+    name: "柵の補強",
+    detail: (s) => `オオカミよけ Lv${s.fence}→${s.fence + 1}（秋はLv2必要）`,
     cost: (s) => 5 + s.fence * 4,
     maxed: (s) => s.fence >= 3,
     apply: (s) => {
       s.fence += 1;
-      return "さくを がっちり ほきょうした。";
+      return "柵をがっちり補強した。";
     },
   },
   sign: {
-    name: "かんばんを たてる",
-    detail: (s) => `うりねが いつも +1G（いまは +${s.sign}G）`,
+    name: "看板を立てる",
+    detail: (s) => `売値がいつも +1G（今は +${s.sign}G）`,
     cost: (s) => 9 + s.sign * 6,
     maxed: (s) => s.sign >= 3,
     apply: (s) => {
       s.sign += 1;
-      return "かわいい かんばんを たてた。ひょうばんが あがりそう。";
+      return "かわいい看板を立てた。評判が上がりそう。";
     },
   },
   hay: {
-    name: "ほしくさを かう",
-    detail: () => "すぐに くさ +8",
+    name: "干し草を買う",
+    detail: () => "すぐに草 +8",
     cost: () => 4,
     maxed: () => false,
     apply: (s) => {
       s.grass += 8;
-      return "ほしくさを どっさり かってきた。";
+      return "干し草をどっさり買ってきた。";
     },
   },
   treat: {
-    name: "とくせい おやつ",
-    detail: () => "つぎの けがりで ようもう 2ばい",
+    name: "特製おやつ",
+    detail: () => "次の毛刈りで羊毛2倍",
     cost: () => 5,
     maxed: () => false,
     apply: (s) => {
       s.treatReady = true;
-      return "とくせいおやつを くばった。ひつじたちは おおよろこび。";
+      return "特製おやつを配った。ひつじたちは大喜び。";
     },
   },
 };
@@ -172,46 +172,46 @@ function rollEvent(s: GameState) {
   if (s.week >= 3 && r < (acc += 0.14)) {
     s.event = "wolf";
     if (s.fence >= fenceNeeded(s.week)) {
-      s.report.push("よなかに オオカミが きたけれど、じょうぶな さくが まもってくれた！");
+      s.report.push("夜中にオオカミが来たけれど、丈夫な柵が守ってくれた！");
     } else if (s.sheep <= 2) {
-      s.report.push("とおくで オオカミの とおぼえ…。ひつじたちは よりそって ぶじだった。");
+      s.report.push("遠くでオオカミの遠ぼえ…。ひつじたちは寄りそって無事だった。");
     } else {
       s.sheep -= 1;
-      s.report.push("よなかに オオカミが きて、ひつじが 1ぴき つれていかれた…。さくが あれば ふせげる。");
+      s.report.push("夜中にオオカミが来て、ひつじが1匹連れていかれた…。柵があれば防げる。");
     }
     return;
   }
   if (r < (acc += 0.12)) {
     s.event = "rain";
-    s.report.push("こんしゅうは あめつづき。くさの そだちが わるい…。");
+    s.report.push("今週は雨続き。草の育ちが悪い…。");
     return;
   }
   if (r < (acc += 0.12)) {
     s.event = "sunny";
-    s.report.push("ぽかぽかの ひより！ くさが ぐんぐん そだつ。");
+    s.report.push("ぽかぽか日和！草がぐんぐん育つ。");
     return;
   }
   if (r < (acc += 0.1)) {
     s.event = "boom";
     s.boom = true;
-    s.report.push("まちは ようもうブーム！ こんしゅうだけ うりねが 2ばい！");
+    s.report.push("町は羊毛ブーム！今週だけ売値が2倍！");
     return;
   }
   if (r < (acc += 0.06)) {
     s.event = "chick";
     s.money += 6;
-    s.report.push("まいごの ひよこが あそびに きた！ みにきた おきゃくさんから 6G。");
+    s.report.push("迷子のひよこが遊びに来た！見に来たお客さんから6G。");
     return;
   }
 }
 
-/* 週のはじまりの生産：くさが育つ → ひつじが食べる → けがり */
+/* 週のはじまりの生産：草が育つ → ひつじが食べる → 毛刈り */
 function produce(s: GameState) {
   let growth = grassGrowth(s);
   if (s.event === "rain") growth = Math.floor(growth / 2);
   if (s.event === "sunny") growth *= 2;
   s.grass += growth;
-  s.report.push(`くさが ${growth}たば そだった。`);
+  s.report.push(`草が${growth}束育った。`);
 
   const fed = Math.min(s.sheep, s.grass);
   s.grass -= fed;
@@ -219,15 +219,15 @@ function produce(s: GameState) {
   if (s.treatReady && fed > 0) {
     gained *= 2;
     s.treatReady = false;
-    s.report.push("おやつパワーで けなみ ふわっふわ！ ようもう 2ばい！");
+    s.report.push("おやつパワーで毛なみふわっふわ！羊毛2倍！");
   }
   s.wool += gained;
   if (fed > 0) {
-    s.report.push(`ひつじ ${fed}ひきが くさを たべて、ようもうが ${gained}こ とれた。`);
+    s.report.push(`ひつじ${fed}匹が草を食べて、羊毛が${gained}個とれた。`);
   }
   const hungry = s.sheep - fed;
   if (hungry > 0) {
-    s.report.push(`くさが たりなくて ${hungry}ひきは しょんぼり…（ようもうが とれない）`);
+    s.report.push(`草が足りなくて${hungry}匹はしょんぼり…（羊毛がとれない）`);
   }
 }
 
@@ -264,7 +264,7 @@ export function newGame(): GameState {
     boom: false,
     treatReady: false,
     event: "none",
-    report: ["ぼくじょうに はるが きた！ ことしも ひつじと がんばろう。"],
+    report: ["牧場に春が来た！今年もひつじとがんばろう。"],
     offers: [],
   };
   produce(s);
@@ -276,7 +276,7 @@ export function sellWool(prev: GameState): GameState {
   if (prev.wool <= 0) return prev;
   const s = { ...prev, report: [...prev.report] };
   const earned = s.wool * sellPrice(s);
-  s.report.push(`ようもう ${s.wool}こを ${earned}Gで うった！`);
+  s.report.push(`羊毛${s.wool}個を${earned}Gで売った！`);
   s.money += earned;
   s.wool = 0;
   return s;
@@ -295,7 +295,7 @@ export function nap(prev: GameState): GameState {
   const s = { ...prev, money: prev.money + NAP_MONEY };
   return advanceWeek(
     s,
-    `のんびり ひるね。けんがくの おきゃくさんが ${NAP_MONEY}G おいていった。`,
+    `のんびり昼寝。見学のお客さんが${NAP_MONEY}Gおいていった。`,
   );
 }
 
@@ -318,14 +318,14 @@ export function finalize(s: GameState): FinalResult {
   const score = s.money + woolIncome + sheepValue;
   const [title, comment] =
     score < 250
-      ? ["みならい ぼくじょうぬし", "ひつじたちと なかよくなれた。らいねんも がんばろう！"]
+      ? ["見習い牧場主", "ひつじたちと仲良くなれた。来年もがんばろう！"]
       : score < 400
-        ? ["いちにんまえの ぼくじょうぬし", "むらの ひとたちも みとめる うでまえ。"]
+        ? ["一人前の牧場主", "村の人たちも認める腕前。"]
         : score < 550
-          ? ["うできき ぼくじょうぬし", "となりまちまで うわさが とどいている。"]
+          ? ["腕きき牧場主", "となり町までうわさが届いている。"]
           : score < 700
-            ? ["ぼくじょうの めいじん", "しゅうかくさいは れきしに のこる おおにぎわい！"]
-            : ["でんせつの ぼくじょうぬし", "よぞらの ひつじたちも みおろして うたっている。"];
+            ? ["牧場の名人", "収穫祭は歴史に残る大にぎわい！"]
+            : ["伝説の牧場主", "夜空のひつじたちも見下ろして歌っている。"];
   return {
     money: s.money,
     woolCount: s.wool,

@@ -199,19 +199,19 @@ export function RanchGame() {
             <div className="mk-start-body">
               <h1 className="mk-title">もこもこ牧場</h1>
               <p className="mk-tagline">
-                はるから あきまで、12しゅうかんの
+                春から秋まで、12週間の
                 <br />
-                ちいさな ぼくじょうけいえい
+                小さな牧場経営
               </p>
               <ul className="mk-howto">
-                <li>まいしゅう 3まいの カードから 1まい えらんで、ぼくじょうを そだてよう</li>
-                <li>ようもうの うりねは まいしゅう かわる。うりどきを みきわめて</li>
-                <li>12しゅうめの しゅうかくさいで、そうしさんを はっぴょう！</li>
+                <li>毎週3枚のカードから1枚選んで、牧場を育てよう</li>
+                <li>羊毛の売値は毎週変わる。売り時を見きわめて</li>
+                <li>12週目の収穫祭で、総資産を発表！</li>
               </ul>
               <button type="button" className="mk-primary" onClick={start}>
-                ぼくじょうを はじめる
+                牧場を始める
               </button>
-              <p className="mk-note">セーブは ありません。1かい 5〜10ぷんで あそべます。</p>
+              <p className="mk-note">セーブはありません。1回5〜10分で遊べます。</p>
             </div>
           </div>
         )}
@@ -230,36 +230,36 @@ export function RanchGame() {
                   {seasonLabel(game.week)}
                 </span>
                 <span className="mk-week-label">
-                  {game.week}しゅうめ
+                  {game.week}週目
                   {game.week === TOTAL_WEEKS
-                    ? "・さいごの しゅう！"
-                    : `・のこり ${TOTAL_WEEKS - game.week}しゅう`}
+                    ? "・最後の週！"
+                    : `・残り ${TOTAL_WEEKS - game.week}週`}
                 </span>
                 <button type="button" className="mk-quit" onClick={quit}>
-                  さいしょから
+                  最初から
                 </button>
               </div>
               <div className="mk-chip-row">
-                <span className="mk-chip" aria-label={`おかね ${game.money}ゴールド`}>
+                <span className="mk-chip" aria-label={`お金 ${game.money}G`}>
                   <CoinIcon />
                   {game.money}
                 </span>
-                <span className="mk-chip" aria-label={`くさ ${game.grass}たば`}>
+                <span className="mk-chip" aria-label={`草 ${game.grass}束`}>
                   <GrassIcon />
                   {game.grass}
                 </span>
-                <span className="mk-chip" aria-label={`ようもう ${game.wool}こ`}>
+                <span className="mk-chip" aria-label={`羊毛 ${game.wool}個`}>
                   <YarnIcon />
                   {game.wool}
                 </span>
-                <span className="mk-chip" aria-label={`ひつじ ${game.sheep}ひき`}>
+                <span className="mk-chip" aria-label={`ひつじ ${game.sheep}匹`}>
                   <SheepFaceIcon />
                   {game.sheep}
                 </span>
               </div>
               <div className="mk-market-row">
                 <span className="mk-price">
-                  ようもうの うりね <b>{sellPrice(game)}G</b>
+                  羊毛の売値 <b>{sellPrice(game)}G</b>
                   {game.priceDelta > 0 && (
                     <span className="mk-price-up"> ▲{game.priceDelta}</span>
                   )}
@@ -275,7 +275,7 @@ export function RanchGame() {
                   onClick={handleSell}
                   disabled={game.wool === 0 || busy}
                 >
-                  ぜんぶ うる
+                  全部売る
                   {game.wool > 0 && ` +${game.wool * sellPrice(game)}G`}
                 </button>
               </div>
@@ -289,7 +289,7 @@ export function RanchGame() {
 
             {game.week < TOTAL_WEEKS ? (
               <div className="mk-actions">
-                <p className="mk-actions-title">— こんしゅうの おこないを 1つ えらぶ —</p>
+                <p className="mk-actions-title">— 今週の行動を1つ選ぶ —</p>
                 {game.offers.map((id) => {
                   const card = CARDS[id];
                   const cost = card.cost(game);
@@ -317,22 +317,22 @@ export function RanchGame() {
                   onClick={handleNap}
                   disabled={busy}
                 >
-                  なにもせず ひるねする（+{NAP_MONEY}G で つぎの しゅうへ）
+                  何もせず昼寝する（+{NAP_MONEY}Gで次の週へ）
                 </button>
               </div>
             ) : (
               <div className="mk-actions">
                 <p className="mk-festival-note">
-                  いよいよ しゅうかくさい！ うりのこした ようもうは、1こ{" "}
-                  {FESTIVAL_BASE_PRICE + game.sign}Gで かいとってもらえる。
-                  いま うると 1こ {sellPrice(game)}G。どっちが おとく？
+                  いよいよ収穫祭！売り残した羊毛は1個
+                  {FESTIVAL_BASE_PRICE + game.sign}Gで買い取ってもらえる。
+                  今売ると1個{sellPrice(game)}G。どっちがお得？
                 </p>
                 <button
                   type="button"
                   className="mk-primary"
                   onClick={() => setScreen("result")}
                 >
-                  しゅうかくさいへ！
+                  収穫祭へ！
                 </button>
               </div>
             )}
@@ -347,39 +347,39 @@ export function RanchGame() {
                 const r = finalize(game);
                 return (
                   <>
-                    <h2 className="mk-result-h">＊ しゅうかくさい ＊</h2>
+                    <h2 className="mk-result-h">＊ 収穫祭 ＊</h2>
                     <div className="mk-tally">
                       <div className="mk-tally-row">
-                        <span>てもとの おかね</span>
+                        <span>手元のお金</span>
                         <span>{r.money}G</span>
                       </div>
                       <div className="mk-tally-row">
                         <span>
-                          ようもう {r.woolCount}こ × {r.festivalPrice}G
+                          羊毛 {r.woolCount}個 × {r.festivalPrice}G
                         </span>
                         <span>{r.woolIncome}G</span>
                       </div>
                       <div className="mk-tally-row">
                         <span>
-                          ひつじ {r.sheepCount}ひき × {SHEEP_VALUE}G
+                          ひつじ {r.sheepCount}匹 × {SHEEP_VALUE}G
                         </span>
                         <span>{r.sheepValue}G</span>
                       </div>
                       <div className="mk-tally-row mk-tally-total">
-                        <span>ぼくじょうの そうしさん</span>
+                        <span>牧場の総資産</span>
                         <span>{r.score}G</span>
                       </div>
                     </div>
                     <div className="mk-award">
-                      <p className="mk-award-label">あなたに おくられた しょうごう</p>
+                      <p className="mk-award-label">あなたに贈られた称号</p>
                       <p className="mk-award-title">{r.title}</p>
                     </div>
                     <p className="mk-comment">{r.comment}</p>
                     <button type="button" className="mk-primary" onClick={start}>
-                      もういちど はじめから
+                      もう一度最初から
                     </button>
                     <button type="button" className="mk-quit mk-quit-center" onClick={quit}>
-                      タイトルに もどる
+                      タイトルに戻る
                     </button>
                   </>
                 );

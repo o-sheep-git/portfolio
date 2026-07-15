@@ -4,7 +4,7 @@ import { RanchGame } from "./ranch-game";
 export const metadata: Metadata = {
   title: "もこもこ牧場",
   description:
-    "はるから あきまでの12週間、ひつじを育てて羊毛を売る、ちいさな牧場経営ゲーム。収穫祭のスコアをめざして、なんどでも遊べます。",
+    "春から秋までの12週間、ひつじを育てて羊毛を売る、小さな牧場経営ゲーム。収穫祭のスコアを目指して、何度でも遊べます。",
   robots: { index: false, follow: false },
 };
 
