@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { site } from "@/lib/site";
 
 export function SiteFooter() {
@@ -6,6 +7,12 @@ export function SiteFooter() {
       <div className="mx-auto flex max-w-3xl flex-col gap-3 px-6 py-8 text-sm text-neutral-500 sm:flex-row sm:items-center sm:justify-between">
         <p>&copy; {new Date().getFullYear()} {site.name}</p>
         <div className="flex gap-5">
+          <Link
+            href="/privacy"
+            className="transition-colors hover:text-neutral-900"
+          >
+            プライバシーポリシー
+          </Link>
           <a
             href={site.links.note}
             target="_blank"
