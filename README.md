@@ -34,6 +34,24 @@ npm run start   # 本番ビルドの起動
 npm run lint    # Lint
 ```
 
+## アクセス解析
+
+Google Tag Manager と GA4 のタグを組み込んでいます。どちらも環境変数を設定したときだけ読み込まれ、未設定なら計測用のコードは一切出力されません。ローカル開発では通常なにも設定せず、オフのまま使います。
+
+| 変数名 | 用途 | 例 |
+| --- | --- | --- |
+| `NEXT_PUBLIC_GTM_ID` | Google Tag Manager のコンテナID | `GTM-XXXXXXX` |
+| `NEXT_PUBLIC_GA_ID` | GA4 の測定ID | `G-XXXXXXXXXX` |
+
+本番のIDは Vercel のプロジェクト設定(Settings → Environment Variables)に登録し、再デプロイすると反映されます。
+
+設定するのは、次のどちらか一方です。
+
+- **GTM経由でGA4を配信する(おすすめ)** … `NEXT_PUBLIC_GTM_ID` だけを設定し、GA4のタグはGTMの管理画面側で作成する
+- **GTMを使わずGA4だけ入れる** … `NEXT_PUBLIC_GA_ID` だけを設定する
+
+両方を設定したうえでGTM側にもGA4タグを作ると、同じページビューが二重に計測されるため注意してください。
+
 ## リンク
 
 - サイト: https://portfolio-teal-two-97.vercel.app/

@@ -2,6 +2,11 @@ import type { Metadata } from "next";
 import { Noto_Sans_JP } from "next/font/google";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import {
+  GoogleAnalytics,
+  GoogleTagManager,
+  GoogleTagManagerNoScript,
+} from "@/components/analytics";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -26,9 +31,12 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body className={`${notoSansJP.className} flex min-h-screen flex-col antialiased`}>
+        <GoogleTagManagerNoScript />
         <SiteHeader />
         <main className="flex-1">{children}</main>
         <SiteFooter />
+        <GoogleTagManager />
+        <GoogleAnalytics />
       </body>
     </html>
   );
