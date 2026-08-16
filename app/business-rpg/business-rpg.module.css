@@ -1,0 +1,735 @@
+.dashboardRoot {
+  --rpg-bg: #080e12;
+  --rpg-panel: rgba(14, 24, 30, 0.92);
+  --rpg-panel-soft: rgba(19, 33, 40, 0.78);
+  --rpg-line: rgba(138, 184, 173, 0.2);
+  --rpg-text: #e9f0e8;
+  --rpg-muted: #91a29d;
+  --rpg-accent: #d4af67;
+  --rpg-accent-bright: #f1ce84;
+  --rpg-mint: #6ec6ad;
+  color: var(--rpg-text);
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    radial-gradient(circle at 18% 0%, rgba(64, 123, 109, 0.2), transparent 34%),
+    #080e12;
+  background-size: 36px 36px, 36px 36px, auto, auto;
+}
+
+.ambientGlow {
+  position: absolute;
+  top: 8rem;
+  right: -12rem;
+  width: 32rem;
+  height: 32rem;
+  border-radius: 999px;
+  background: rgba(212, 175, 103, 0.08);
+  filter: blur(90px);
+  pointer-events: none;
+}
+
+.dashboard {
+  position: relative;
+  z-index: 1;
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: 36px 0 64px;
+}
+
+.dashboardHeader {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 0 2px 24px;
+  border-bottom: 1px solid var(--rpg-line);
+}
+
+.brand {
+  margin-top: 6px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.7rem, 4vw, 2.8rem);
+  letter-spacing: 0.08em;
+  color: var(--rpg-text);
+}
+
+.systemStatus {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 7px;
+  color: var(--rpg-muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+}
+
+.statusDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--rpg-mint);
+  box-shadow: 0 0 12px rgba(110, 198, 173, 0.8);
+}
+
+.primaryGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.92fr);
+  gap: 18px;
+  margin-top: 22px;
+}
+
+.secondaryGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.dashboardFooter {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 18px;
+  padding: 18px 2px 0;
+  border-top: 1px solid var(--rpg-line);
+  color: #64746f;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+}
+
+.dashboardFooter p:last-child {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dashboardRoot :global(.panel) {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--rpg-line);
+  border-radius: 4px;
+  background: linear-gradient(145deg, var(--rpg-panel), var(--rpg-panel-soft));
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.22);
+}
+
+.dashboardRoot :global(.panel::before) {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 46px;
+  height: 1px;
+  background: var(--rpg-accent);
+  content: "";
+}
+
+.dashboardRoot :global(.hero-panel) {
+  display: grid;
+  grid-template-columns: 190px 1fr;
+  gap: 28px;
+  min-height: 380px;
+  padding: 38px;
+}
+
+.dashboardRoot :global(.character-portrait) {
+  position: relative;
+  display: grid;
+  width: 184px;
+  height: 250px;
+  place-items: center;
+  align-self: center;
+  border: 1px solid rgba(212, 175, 103, 0.34);
+  background:
+    linear-gradient(135deg, rgba(212, 175, 103, 0.13), transparent 48%),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 5px),
+    #0b151a;
+  color: var(--rpg-accent-bright);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 2.4rem;
+  letter-spacing: 0.08em;
+}
+
+.dashboardRoot :global(.character-portrait::before),
+.dashboardRoot :global(.character-portrait::after) {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  content: "";
+}
+
+.dashboardRoot :global(.character-portrait::before) {
+  top: 9px;
+  left: 9px;
+  border-top: 1px solid var(--rpg-accent);
+  border-left: 1px solid var(--rpg-accent);
+}
+
+.dashboardRoot :global(.character-portrait::after) {
+  right: 9px;
+  bottom: 9px;
+  border-right: 1px solid var(--rpg-accent);
+  border-bottom: 1px solid var(--rpg-accent);
+}
+
+.dashboardRoot :global(.portrait-orbit) {
+  position: absolute;
+  width: 106px;
+  height: 106px;
+  border: 1px solid rgba(110, 198, 173, 0.24);
+  border-radius: 50%;
+  box-shadow: 0 0 48px rgba(110, 198, 173, 0.08);
+}
+
+.dashboardRoot :global(.portrait-orbit::after) {
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--rpg-mint);
+  content: "";
+}
+
+.dashboardRoot :global(.character-copy) {
+  align-self: center;
+  min-width: 0;
+}
+
+.dashboardRoot :global(.eyebrow) {
+  color: var(--rpg-accent);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.67rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+}
+
+.dashboardRoot h1 {
+  margin-top: 11px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  line-height: 1;
+  letter-spacing: 0.05em;
+}
+
+.dashboardRoot :global(.job-name) {
+  margin-top: 12px;
+  color: var(--rpg-muted);
+  font-size: 0.88rem;
+  letter-spacing: 0.08em;
+}
+
+.dashboardRoot :global(.level-row) {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-top: 28px;
+  color: var(--rpg-muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.13em;
+}
+
+.dashboardRoot :global(.level-row strong) {
+  color: var(--rpg-accent-bright);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.dashboardRoot :global(.rank-badge) {
+  margin-left: auto;
+  padding: 4px 7px;
+  border: 1px solid rgba(110, 198, 173, 0.3);
+  color: var(--rpg-mint);
+  font-size: 0.58rem;
+}
+
+.dashboardRoot :global(.progress-block) {
+  margin-top: 20px;
+}
+
+.dashboardRoot :global(.progress-label),
+.dashboardRoot :global(.status-meta) {
+  display: flex;
+  justify-content: space-between;
+  color: var(--rpg-muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.69rem;
+  letter-spacing: 0.09em;
+}
+
+.dashboardRoot :global(.progress-track) {
+  position: relative;
+  overflow: hidden;
+  height: 8px;
+  margin-top: 9px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(0, 0, 0, 0.34);
+}
+
+.dashboardRoot :global(.progress-fill) {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: linear-gradient(90deg, #9b7437, var(--rpg-accent-bright));
+  box-shadow: 0 0 14px rgba(212, 175, 103, 0.24);
+}
+
+.dashboardRoot :global(.progress-note) {
+  margin-top: 8px;
+  color: #657671;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  text-align: right;
+}
+
+.dashboardRoot :global(.status-panel) {
+  min-height: 380px;
+  padding: 32px;
+}
+
+.dashboardRoot :global(.panel-heading) {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--rpg-line);
+}
+
+.dashboardRoot :global(.panel-heading h2) {
+  margin-top: 6px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.3rem;
+  letter-spacing: 0.08em;
+}
+
+.dashboardRoot :global(.panel-index) {
+  color: rgba(212, 175, 103, 0.34);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.6rem;
+}
+
+.dashboardRoot :global(.status-list) {
+  display: grid;
+  gap: 17px;
+  margin-top: 22px;
+}
+
+.dashboardRoot :global(.status-meta strong) {
+  color: var(--rpg-text);
+  font-size: 0.84rem;
+}
+
+.dashboardRoot :global(.status-track) {
+  height: 6px;
+  margin-top: 7px;
+}
+
+.dashboardRoot :global(.status-fill) {
+  background: linear-gradient(90deg, #2f6f63, var(--rpg-mint));
+  box-shadow: 0 0 12px rgba(110, 198, 173, 0.2);
+}
+
+.dashboardRoot :global(.job-panel) {
+  padding: 28px 30px;
+}
+
+.dashboardRoot :global(.compact-heading) {
+  padding-bottom: 16px;
+}
+
+.dashboardRoot :global(.job-path) {
+  display: grid;
+  grid-template-columns: 1fr 28px 1fr;
+  align-items: stretch;
+  margin-top: 20px;
+}
+
+.dashboardRoot :global(.job-card) {
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(5, 12, 16, 0.34);
+}
+
+.dashboardRoot :global(.current-job) {
+  border-color: rgba(110, 198, 173, 0.25);
+}
+
+.dashboardRoot :global(.job-label),
+.dashboardRoot :global(.job-state) {
+  color: #687873;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.56rem;
+  letter-spacing: 0.13em;
+}
+
+.dashboardRoot :global(.job-value) {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.dashboardRoot :global(.job-value strong) {
+  overflow: hidden;
+  color: var(--rpg-text);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.05rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dashboardRoot :global(.job-value span) {
+  color: var(--rpg-accent-bright);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.72rem;
+  white-space: nowrap;
+}
+
+.dashboardRoot :global(.job-state) {
+  margin-top: 13px;
+  color: var(--rpg-mint);
+}
+
+.dashboardRoot :global(.target-job .job-state) {
+  color: #687873;
+  text-align: right;
+}
+
+.dashboardRoot :global(.job-fill) {
+  background: linear-gradient(90deg, #9b7437, var(--rpg-accent-bright));
+}
+
+.dashboardRoot :global(.job-connector) {
+  display: flex;
+  align-items: center;
+  padding: 0 5px;
+}
+
+.dashboardRoot :global(.job-connector span) {
+  position: relative;
+  width: 100%;
+  height: 1px;
+  background: rgba(212, 175, 103, 0.38);
+}
+
+.dashboardRoot :global(.job-connector span::after) {
+  position: absolute;
+  top: -3px;
+  right: 0;
+  width: 6px;
+  height: 6px;
+  border-top: 1px solid var(--rpg-accent);
+  border-right: 1px solid var(--rpg-accent);
+  transform: rotate(45deg);
+  content: "";
+}
+
+.dashboardRoot :global(.quest-panel) {
+  display: grid;
+  grid-template-columns: 54px minmax(0, 1fr);
+  align-items: start;
+  gap: 20px;
+  padding: 28px 30px;
+  border-color: rgba(212, 175, 103, 0.28);
+}
+
+.dashboardRoot :global(.quest-marker) {
+  display: grid;
+  width: 50px;
+  height: 50px;
+  place-items: center;
+  border: 1px solid rgba(212, 175, 103, 0.42);
+  background: rgba(212, 175, 103, 0.08);
+  color: var(--rpg-accent-bright);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.55rem;
+}
+
+.dashboardRoot :global(.quest-content h2) {
+  margin-top: 8px;
+  color: var(--rpg-text);
+  font-size: 1.02rem;
+  font-weight: 500;
+  line-height: 1.65;
+}
+
+.dashboardRoot :global(.quest-category) {
+  margin-top: 8px;
+  color: #6f807a;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.11em;
+}
+
+.dashboardRoot :global(.reward-line) {
+  display: grid;
+  gap: 5px;
+  margin-top: 18px;
+  padding-top: 13px;
+  border-top: 1px solid var(--rpg-line);
+}
+
+.dashboardRoot :global(.reward-line span) {
+  color: var(--rpg-accent);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.56rem;
+  letter-spacing: 0.13em;
+}
+
+.dashboardRoot :global(.reward-line strong) {
+  color: #b8c8c2;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.66rem;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.dashboardRoot :global(.quest-status) {
+  position: absolute;
+  top: 28px;
+  right: 28px;
+  color: var(--rpg-mint);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+}
+
+.dashboardRoot :global(.skills-panel),
+.dashboardRoot :global(.achievements-panel) {
+  margin-top: 18px;
+  padding: 32px;
+}
+
+.dashboardRoot :global(.skill-grid) {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.dashboardRoot :global(.skill-category) {
+  min-width: 0;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(5, 12, 16, 0.27);
+}
+
+.dashboardRoot :global(.skill-category-heading) {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 9px;
+  min-height: 54px;
+  padding: 10px 13px;
+  border-bottom: 1px solid var(--rpg-line);
+}
+
+.dashboardRoot :global(.skill-code) {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border: 1px solid rgba(110, 198, 173, 0.25);
+  color: var(--rpg-mint);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.54rem;
+}
+
+.dashboardRoot :global(.skill-category-heading h3) {
+  overflow: hidden;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-overflow: ellipsis;
+}
+
+.dashboardRoot :global(.skill-category-heading > span:last-child) {
+  color: #53645f;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.58rem;
+}
+
+.dashboardRoot :global(.skill-category ul) {
+  padding: 8px 13px 12px;
+}
+
+.dashboardRoot :global(.skill-category li) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 34px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.045);
+  color: #aebcb7;
+  font-size: 0.72rem;
+}
+
+.dashboardRoot :global(.skill-category li:last-child) {
+  border-bottom: 0;
+}
+
+.dashboardRoot :global(.skill-level) {
+  color: var(--rpg-accent-bright);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.62rem;
+  white-space: nowrap;
+}
+
+.dashboardRoot :global(.achievement-count) {
+  padding: 5px 8px;
+  border: 1px solid rgba(212, 175, 103, 0.24);
+  color: var(--rpg-accent);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.09em;
+}
+
+.dashboardRoot :global(.achievement-grid) {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.dashboardRoot :global(.achievement-grid li) {
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+  min-height: 66px;
+  padding: 10px 13px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(5, 12, 16, 0.25);
+}
+
+.dashboardRoot :global(.achievement-grid li:last-child:nth-child(odd)) {
+  grid-column: 1 / -1;
+}
+
+.dashboardRoot :global(.achievement-medal) {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid rgba(212, 175, 103, 0.35);
+  background: rgba(212, 175, 103, 0.06);
+  color: var(--rpg-accent-bright);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.52rem;
+  letter-spacing: 0.04em;
+}
+
+.dashboardRoot :global(.achievement-number) {
+  display: block;
+  color: #5d6e68;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.53rem;
+  letter-spacing: 0.11em;
+}
+
+.dashboardRoot :global(.achievement-grid strong) {
+  display: block;
+  margin-top: 4px;
+  color: #bfcac6;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+@media (max-width: 900px) {
+  .primaryGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .secondaryGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboardRoot :global(.skill-grid) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .dashboard {
+    width: min(100% - 28px, 1180px);
+    padding-top: 24px;
+  }
+
+  .dashboardHeader {
+    align-items: flex-start;
+  }
+
+  .systemStatus {
+    padding-top: 8px;
+    font-size: 0;
+  }
+
+  .systemStatus::after {
+    font-size: 0.6rem;
+    content: "ONLINE";
+  }
+
+  .dashboardRoot :global(.hero-panel) {
+    grid-template-columns: 1fr;
+    padding: 26px 22px;
+  }
+
+  .dashboardRoot :global(.character-portrait) {
+    width: 100%;
+    height: 150px;
+  }
+
+  .dashboardRoot :global(.status-panel) {
+    padding: 26px 22px;
+  }
+
+  .dashboardRoot :global(.job-panel),
+  .dashboardRoot :global(.quest-panel),
+  .dashboardRoot :global(.skills-panel),
+  .dashboardRoot :global(.achievements-panel) {
+    padding: 24px 20px;
+  }
+
+  .dashboardRoot :global(.job-path) {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .dashboardRoot :global(.job-connector) {
+    display: none;
+  }
+
+  .dashboardRoot :global(.quest-panel) {
+    grid-template-columns: 42px minmax(0, 1fr);
+    gap: 14px;
+  }
+
+  .dashboardRoot :global(.quest-marker) {
+    width: 40px;
+    height: 40px;
+  }
+
+  .dashboardRoot :global(.quest-status) {
+    display: none;
+  }
+
+  .dashboardRoot :global(.skill-grid),
+  .dashboardRoot :global(.achievement-grid) {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboardRoot :global(.achievement-grid li:last-child:nth-child(odd)) {
+    grid-column: auto;
+  }
+
+  .dashboardFooter {
+    display: grid;
+    gap: 7px;
+  }
+}

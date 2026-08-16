@@ -1,0 +1,25 @@
+{
+  "name": "OHITSUJI",
+  "level": 18,
+  "job": "Web Operator",
+  "exp": {
+    "current": 1840,
+    "nextLevel": 2400
+  },
+  "statuses": [
+    { "name": "WEB", "value": 62 },
+    { "name": "ANALYTICS", "value": 55 },
+    { "name": "MARKETING", "value": 74 },
+    { "name": "WRITING", "value": 81 },
+    { "name": "OPERATIONS", "value": 76 },
+    { "name": "AI", "value": 78 }
+  ],
+  "currentJob": {
+    "name": "Web Operator",
+    "level": 12
+  },
+  "targetJob": {
+    "name": "Web Analyst",
+    "unlockProgress": 68
+  }
+}
