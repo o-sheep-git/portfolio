@@ -14,6 +14,7 @@ import styles from "./business-rpg.module.css";
 export const metadata: Metadata = {
   title: "Business RPG",
   description: "ビジネススキルと学習状況を冒険者ステータスのように確認できるダッシュボード。",
+  robots: { index: false, follow: false },
 };
 
 export default function BusinessRpgPage() {
