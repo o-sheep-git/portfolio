@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>おひつじ | ポートフォリオ</title>
-    <meta name="description" content="個人で働く人の発信を、依頼や信頼につながる形に整える発信設計と、記事・Webコンテンツの制作をしています。">
+    <title>H.Oshikiri | Owned Media &amp; Web Analytics</title>
+    <meta name="description" content="H.Oshikiriのポートフォリオ。オウンドメディアや自社ECサイトの運営経験をもとに、Webサイトの計測・分析・改善に取り組んでいます。">
     <link rel="canonical" href="https://portfolio-teal-two-97.vercel.app/">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="/assets/css/style.css">
@@ -28,52 +28,101 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KPLHVZVR" height="0" width="0" class="gtm-frame" title="Google Tag Manager"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
 
+    <a class="skip-link" href="#main-content" data-track="skip-to-content">本文へ移動</a>
     <header class="site-header">
       <div class="container header-inner">
-        <a class="site-name" href="/" aria-label="おひつじ ポートフォリオ トップ">おひつじ</a>
+        <a class="site-name" href="/" data-track="header-brand">H.Oshikiri</a>
+        <nav aria-label="メインナビゲーション">
+          <ul class="page-links" lang="en">
+            <li><a href="/" data-track="header-home" aria-current="page">Home</a></li>
+            <li><a href="/about/" data-track="header-about">About</a></li>
+            <li><span class="pending">Projects <span class="pending-note" lang="ja">準備中</span></span></li>
+            <li><span class="pending">Lab <span class="pending-note" lang="ja">準備中</span></span></li>
+          </ul>
+        </nav>
       </div>
     </header>
 
-    <main>
-      <section class="hero container">
-        <p class="eyebrow">発信設計 / コンテンツ制作</p>
-        <h1>個人で働く人の仕事を、<br>信頼につながる言葉に。</h1>
-        <p class="lead">おひつじと申します。個人で働く人の発信を、依頼や信頼につながる形に整える「発信設計」と、記事やWebコンテンツの制作をしています。</p>
-        <p class="lead">実績や仕事観を無理に大きく見せるのではなく、その人が積み重ねてきたものを、伝わる形に整えることを大切にしています。</p>
+    <main id="main-content" tabindex="-1">
+      <section class="home-hero" aria-labelledby="home-title">
+        <div class="container hero-inner">
+          <div>
+            <h1 id="home-title">H.Oshikiri</h1>
+            <p class="specialty" lang="en">Owned Media &amp; Web Analytics</p>
+          </div>
+          <div class="hero-intro">
+            <p>オウンドメディアや自社ECサイトの運営経験をもとに、Webサイトの計測・分析・改善に取り組んでいます。</p>
+            <a class="button-link" href="/about/" data-track="home-hero-about" lang="en">About <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
       </section>
 
-      <section class="section container" aria-labelledby="services-title">
-        <h2 id="services-title">できること</h2>
-        <div class="service-list">
-          <article class="service">
-            <p class="service-number" aria-hidden="true">01</p>
-            <h3>発信設計</h3>
-            <p>発信テーマの整理、経験の棚卸し、プロフィール文の整備など、発信の土台づくりを支援します。</p>
+      <section class="container home-section" aria-labelledby="expertise-title">
+        <h2 class="section-label" id="expertise-title" lang="en">Expertise</h2>
+        <div class="expertise-grid">
+          <article class="expertise-item">
+            <h3 lang="en">Owned Media Management</h3>
+            <p class="subtitle">オウンドメディア運用</p>
+            <p>オウンドメディアや自社ECサイトの運営を通じて、コンテンツ制作、集客、販促、サイト改善など、事業目的に応じたWebサイトの運用に携わってきました。</p>
+            <p class="topic-list" lang="en">Content / SEO / EC / CRM</p>
           </article>
-          <article class="service">
-            <p class="service-number" aria-hidden="true">02</p>
-            <h3>記事制作</h3>
-            <p>検索意図やキーワードの整理から構成・執筆まで、読む人を急かさない、伝わる記事をつくります。</p>
-          </article>
-          <article class="service">
-            <p class="service-number" aria-hidden="true">03</p>
-            <h3>Webコンテンツ制作</h3>
-            <p>目的と読み手を整理し、必要な情報へ迷わずたどり着ける、小さくシンプルなWebページを制作します。</p>
+          <article class="expertise-item">
+            <h3 lang="en">Web Analytics</h3>
+            <p class="subtitle">Webアナリティクス</p>
+            <p>Webサイトの目的に応じた計測設計、データの分析・可視化を通じて、課題の把握や改善に必要な情報を整理しています。</p>
+            <p class="topic-list" lang="en">Measurement / Data Analysis / Visualization</p>
           </article>
         </div>
       </section>
 
-      <section class="section statement container" aria-labelledby="stance-title">
-        <p class="eyebrow">Stance</p>
-        <h2 id="stance-title">伝える前に、まず整理する。</h2>
-        <p>言葉を増やすことよりも、何を伝え、何を伝えないかを決めることから始めます。読み手にとって分かりやすく、本人にとって無理のない形を一緒に探します。</p>
-      </section>
+      <div class="upcoming">
+        <div class="container">
+          <section class="home-section overview-row" aria-labelledby="projects-title">
+            <div class="overview-heading">
+              <h2 id="projects-title" lang="en">Projects</h2>
+              <span class="status">準備中</span>
+            </div>
+            <div class="prose">
+              <p>Webサイトの計測設計、データ分析、可視化など、Webアナリティクスに関する実践的な取り組みを紹介します。</p>
+              <h3 class="list-label">今後の掲載予定</h3>
+              <ul class="detail-list">
+                <li>GA4・GTMを用いたWebサイトの計測設計・実装</li>
+                <li>Looker Studioによるダッシュボード制作</li>
+                <li>BigQuery・SQLを用いたデータ分析</li>
+              </ul>
+            </div>
+          </section>
+
+          <section class="home-section overview-row" aria-labelledby="lab-title">
+            <div class="overview-heading">
+              <h2 id="lab-title" lang="en">Lab</h2>
+              <span class="status">準備中</span>
+            </div>
+            <div class="prose">
+              <p>Webサイトの計測やデータ分析に関する技術を実践的に検証するための実験環境です。イベント計測、データレイヤー、Cookie同意制御など、さまざまな計測方法を試していきます。</p>
+            </div>
+          </section>
+        </div>
+      </div>
     </main>
 
     <footer class="site-footer">
-      <div class="container footer-inner">
-        <p>&copy; <span data-current-year>2026</span> おひつじ</p>
-        <a href="/privacy/">プライバシーポリシー</a>
+      <div class="container">
+        <div class="footer-inner">
+          <a class="site-name" href="/" data-track="footer-brand">H.Oshikiri</a>
+          <nav aria-label="フッターナビゲーション">
+            <ul class="page-links" lang="en">
+              <li><a href="/" data-track="footer-home" aria-current="page">Home</a></li>
+              <li><a href="/about/" data-track="footer-about">About</a></li>
+              <li><span class="pending">Projects <span class="pending-note" lang="ja">準備中</span></span></li>
+              <li><span class="pending">Lab <span class="pending-note" lang="ja">準備中</span></span></li>
+            </ul>
+          </nav>
+        </div>
+        <div class="footer-meta">
+          <a href="/privacy/" data-track="footer-privacy">プライバシーポリシー</a>
+          <small>&copy; <span data-current-year>2026</span> H.Oshikiri</small>
+        </div>
       </div>
     </footer>
     <script src="/assets/js/main.js" defer></script>
